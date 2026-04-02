@@ -16,6 +16,8 @@
 # next.js
 /.next/
 /out/
+/.sfdx/
+/.idea/
 
 # production
 /build
