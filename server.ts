@@ -32,7 +32,7 @@ function verifySignature(req: express.Request) {
   return signature === expectedSignature
 }
 
-function mapSalesforceToSanity(sfAccount: Record<string, any>) {
+function mapSalesforceToSanity(sfAccount: Record<string, any>): Record<string, any> {
   let firstName = sfAccount.FirstName
   let lastName = sfAccount.LastName
 
