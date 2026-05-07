@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
 import { createClient } from '@sanity/client'
-import crypto from 'crypto'
 
 type SalesforceAccountSanityDoc = Record<string, any> & {
   _type: 'salesforceAccount'
@@ -23,17 +22,12 @@ const WEBHOOK_SECRET = process.env.SALESFORCE_WEBHOOK_SECRET
 
 function verifySignature(req: express.Request) {
   if (!WEBHOOK_SECRET) return true
-
-  const signature = req.headers['x-salesforce-signature'] as string | undefined
-  if (!signature) return false
-
-  const payload = JSON.stringify(req.body)
-  const expectedSignature = crypto
-    .createHmac('sha256', WEBHOOK_SECRET)
-    .update(payload)
-    .digest('base64')
-
-  return signature === expectedSignature
+  
+  const authHeader = req.headers['authorization'] as string | undefined
+  if (!authHeader) return false
+  
+  // Simple secret validation - just check if header matches the secret
+  return authHeader === `Bearer ${WEBHOOK_SECRET}` || authHeader === WEBHOOK_SECRET
 }
 
 function mapSalesforceToSanity(sfAccount: Record<string, any>): SalesforceAccountSanityDoc {
