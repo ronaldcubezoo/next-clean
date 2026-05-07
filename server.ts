@@ -174,8 +174,6 @@ app.post('/webhook/salesforce', async (req, res) => {
     const result = await sanityClient.createOrReplace({
       _id: docId,
       ...sanityDoc,
-      _updatedAt: new Date().toISOString(),
-      lastSyncedAt: new Date().toISOString(),
     })
 
     console.log(`[Webhook] ${operation} completed for ${docId}`)
@@ -227,8 +225,6 @@ app.post('/webhook/salesforce/batch', async (req, res) => {
         const result = await sanityClient.createOrReplace({
           _id: docId,
           ...sanityDoc,
-          _updatedAt: new Date().toISOString(),
-          lastSyncedAt: new Date().toISOString(),
         })
 
         results.push({
