@@ -20,6 +20,21 @@ const sanityClient = createClient({
 
 const WEBHOOK_SECRET = process.env.SALESFORCE_WEBHOOK_SECRET
 
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Sanity: The Marque</title>
+    </head>
+    <body>
+    </body>
+    </html>
+  `)
+})
+
 function verifySignature(req: express.Request) {
   if (!WEBHOOK_SECRET) return true
   
