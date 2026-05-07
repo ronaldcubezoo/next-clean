@@ -130,9 +130,8 @@ app.post('/webhook/salesforce', async (req, res) => {
     }
 
     const payload = req.body || {}
+    
     const { operation, sobjectType, recordId } = payload as Record<string, any>
-
-    console.log(`[Webhook] Received ${operation} for ${sobjectType} ID: ${recordId}`)
 
     if (sobjectType !== 'Account') {
       console.log(`[Webhook] Ignoring non-Account object: ${sobjectType}`)
