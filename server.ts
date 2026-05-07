@@ -3,6 +3,10 @@ import express from 'express'
 import { createClient } from '@sanity/client'
 import crypto from 'crypto'
 
+type SalesforceAccountSanityDoc = Record<string, any> & {
+  _type: 'salesforceAccount'
+}
+
 const app = express()
 
 app.use(express.json({ limit: '10mb' }))
@@ -32,7 +36,7 @@ function verifySignature(req: express.Request) {
   return signature === expectedSignature
 }
 
-function mapSalesforceToSanity(sfAccount: Record<string, any>): Record<string, any> {
+function mapSalesforceToSanity(sfAccount: Record<string, any>): SalesforceAccountSanityDoc {
   let firstName = sfAccount.FirstName
   let lastName = sfAccount.LastName
 
